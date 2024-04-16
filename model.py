@@ -171,7 +171,7 @@ class DecoderBlock(nn.Module):
         self.residual_connection_block=nn.ModuleList([ResidualConnection(input_feature,dropout) for _ in range(3)])
 
     def forward(self,x,encoder_output,src_mask,tgt_mask):
-        x= self.residual_connection_block[0](x,lambda x:self.self_attention_block(x,x,x,src_mask))
+        x= self.residual_connection_block[0](x,lambda x:self.self_attention_block(x,x,x,tgt_mask))
         x= self.residual_connection_block[1](x,lambda x:self.cross_attention_block(x,encoder_output,encoder_output,tgt_mask))
         x= self.residual_connection_block[2](x,self.feed_forward_block)
 

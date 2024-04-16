@@ -180,11 +180,11 @@ class DecoderBlock(nn.Module):
 class Decoder(nn.Module):
     def __init__(self,input_features:int,layers:nn.ModuleList)->None:
         super().__init__()
-        self.layer=layers
+        self.layers=layers
         self.norm=LayerNormalization(input_features)
 
     def forward(self,x,encoder_output,src_mask,tgt_mask):
-        for layer in self.layer:
+        for layer in self.layers:
             x=layer(x,encoder_output,src_mask,tgt_mask)
 
         return self.norm(x)
